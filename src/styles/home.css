@@ -1,0 +1,12 @@
+.home {
+    display: flex;
+    justify-content: space-around;
+}
+
+.budget-list {
+    border: 1px solid #adf;
+}
+
+.total-budget {
+    border: 1px solid #fda;
+}
