@@ -8,14 +8,14 @@ import Header from './components/Header';
 import BudgetPage from './components/pages/BudgetPage';
 
 function App() {
-  const [error, createError] = useState(null);
+  const error = null;
   return (
     <div className="App">
       <Header />
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/login' element={<Login/>} />
-        <Route path='/budget' element={<BudgetPage/>} />
+        <Route path='/b/:budget' element={<BudgetPage/>} />
         <Route path='/edit' element={<EditBudgetForm/>} />
         <Route path='*' element={<Navigate to='/'/>} />
       </Routes>

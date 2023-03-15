@@ -1,0 +1,30 @@
+.card {
+    border: 2px solid #000000ac;
+    border-radius: 15px;
+    text-align: center;
+    margin: 10px;
+    background-color: #ffffff;
+    filter: drop-shadow(-2px 3px 0px #00000022);
+    position: relative;
+    font-weight: bolder;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-decoration: none;
+    color: #000000;
+}
+
+.card h3, .card p {
+    text-decoration: none;
+    margin: 0;
+}
+
+.budget-card {
+    width: 150px;
+    height: 100px;
+}
+
+.above-max {
+    color: #ff0000;
+}
