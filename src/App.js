@@ -12,6 +12,7 @@ function App() {
   return (
     <div className="App">
       <Header />
+      <div className='main'>
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/login' element={<Login/>} />
@@ -20,6 +21,7 @@ function App() {
         <Route path='*' element={<Navigate to='/'/>} />
       </Routes>
       {error && <ErrorModal/>}
+      </div>
     </div>
   );
 }

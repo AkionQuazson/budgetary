@@ -5,7 +5,7 @@ import BudgetContext from '../../store/budgetContext';
 import '../../styles/home.css'
 
 const Home = (props) => {
-    const {income, adjustIncome} = useContext(BudgetContext);
+    const {income, adjustIncome, budgets} = useContext(BudgetContext);
 
     const budgetList = [<BudgetCard title="asdf"/>, <BudgetCard title="fdsa"/>, <BudgetCard title="qwerty"/>]
     const {totalSpent, totalBudgeted} = {totalSpent: 1500, totalBudgeted: 1800}
