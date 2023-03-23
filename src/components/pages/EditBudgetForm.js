@@ -6,15 +6,20 @@ const EditBudgetForm = (props) => {
     const {mode} = props
 
     const addSub = (e) => {
+        const addSubText = document.getElementById('addSubText');
         e.preventDefault();
         let tempSubs = [...subBudgets];
-        tempSubs.push({name:'asdf'});
+        tempSubs.push({name:addSubText.value});
         setSubBudgets(tempSubs);
+        
     }
 
     const deleteBudget = (e) => {
         e.preventDefault()
         const id = +e.target.parentNode.id[9];
+        let tempSubs = [...subBudgets]
+        tempSubs.splice(id, 1)
+        setSubBudgets(tempSubs)
     }
 
     const displaySub = subBudgets.map((sub, i) => {
@@ -30,7 +35,7 @@ const EditBudgetForm = (props) => {
         </div>
         <ul className="half" >
             {displaySub}
-            <li><input type="text" /><button onClick={(e) => {addSub(e)}}>+</button></li> 
+            <li><input type="text" id="addSubText" /><button onClick={(e) => {addSub(e)}}>+</button></li> 
         </ul>
     </form>
 }
