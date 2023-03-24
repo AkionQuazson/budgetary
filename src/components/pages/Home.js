@@ -13,7 +13,7 @@ const Home = (props) => {
     return <div className='home'>
         <div className='total-budget'> 
             <h3>Monthly Income</h3>
-            <div className='income'>
+            <div className='currency'>
                 <span>$</span>
                 <input type='number' id='income' min='0.00' step='.01' value={income} onChange={(e) => adjustIncome(e.target.value)} />
             </div>

@@ -1,0 +1,43 @@
+form {
+    border: 1px solid #000000;
+    border-radius: 15px;
+    background-color: #cdcdcd;
+    display: flex;
+    flex-wrap: wrap;
+    width: 400px;
+    margin: auto;
+    padding: 5px;
+}
+
+form h2 {
+    width: 400px;
+    text-align: center;
+}
+
+.halfContainer {
+    display: flex;
+}
+
+.half {
+    width: 180px;
+    margin: 8px;
+}
+
+.half input {
+    width: 100px;
+}
+
+#budgetName {
+    width: 210px;
+    margin: auto;
+    text-align: center;
+    font-size: 20px;
+    background-color: #ffffff00;
+    border: none;
+    border-bottom: 3px solid #000000;
+}
+
+input[type=submit] {
+    width: 100px;
+    margin: 5px 150px;
+}

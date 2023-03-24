@@ -31,19 +31,19 @@
     font-weight: bolder;
 }
 
-.income {
+.currency {
     border-bottom: 1px solid #000000;
     text-align: center;
     width: fit-content;
     position: relative;
 }
 
-.income span {
+.currency span {
     position: absolute;
     left: 3px;
 }
 
-#income {
+.currency input {
     border: none;
     width: 55px;
     padding-left: 15px;
