@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router";
+import BudgetContext from "../../store/budgetContext";
 import '../../styles/budgetForm.css'
 
 const EditBudgetForm = (props) => {
@@ -7,25 +9,42 @@ const EditBudgetForm = (props) => {
     const [color, setColor] = useState('#000000');
     const [subText, setSubText] = useState('');
     const [subBudgets, setSubBudgets] = useState([]);
-    const {mode} = props
+
+    const {mode, editBudgets} = useContext(BudgetContext);
+    const navigate = useNavigate();
 
     const addSub = (e) => {
         e.preventDefault();
+        console.log({subBudgets});
+        if(subText.trim() === '') {
+            setSubText('');
+            return;
+        }
         let tempSubs = [...subBudgets];
         tempSubs.push({name:subText});
         setSubBudgets(tempSubs);
-        
+        setSubText('');
     }
 
     const createBudget = (e) => {
         e.preventDefault();
+        if(budgetName.trim === '' || +maxValue <= 0) {
+            alert('Give a name and max value');
+            return;
+        }
         const newBudget = {
             name: budgetName,
             maxValue: +maxValue,
             color,
             subBudgets
         }
-        console.log(newBudget);
+        const change = {
+            type: mode,
+            payload: newBudget,
+            target: null
+        }
+        editBudgets(change)
+        navigate('/');
     }
 
     const deleteSubBudget = (e) => {
@@ -52,8 +71,8 @@ const EditBudgetForm = (props) => {
                 <input type="color" id="color" onChange={(e) => {setColor(e.target.value)}} value={color} />
             </div>
             <ul className="half" >
-                {displaySub}
                 <li><input type="text" onChange={(e) => setSubText(e.target.value)} value={subText} /><button onClick={(e) => {addSub(e)}}>+</button></li> 
+                {displaySub}
             </ul>
         </div>
         <input type="submit" ></input>

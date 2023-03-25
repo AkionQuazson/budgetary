@@ -36,6 +36,8 @@
     text-align: center;
     width: fit-content;
     position: relative;
+    display: block;
+    margin: auto;
 }
 
 .currency span {

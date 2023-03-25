@@ -7,34 +7,40 @@ const BudgetContext = createContext({
 
 export const BudgetContextProvider = (props) => {
     const [income, setIncome] = useState(0.00);
-    const [budgets, setBudgets] = useState({});
+    const [budgets, setBudgets] = useState([]);
+    const [mode, setMode] = useState('add');
 
     
     const contextValue = {
         income,
         budgets,
+        mode,
         adjustIncome: (number) => {
             setIncome(number);
         },
         editBudgets: (change) => {
             const {type, target, payload} = change;
 
-            let modBudgets = {...budgets};
+            let modBudgets = [...budgets];
             switch(type) {
                 case 'add': 
-                    setBudgets({...budgets, target});
+                    modBudgets.push(payload)
+                    setBudgets(modBudgets);
                     break;
                 case 'remove':
-                    delete modBudgets[target];
+                    modBudgets.splice(target, 1);
                     setBudgets(modBudgets);
                     break;
                 case 'change':
-                    modBudgets[target] = payload;
+                    modBudgets.splice(target, 1, payload);
                     setBudgets(modBudgets);
                     break;
                 default:
                     console.log('undefined action');
             }
+        },
+        editMode: (newMode) => {
+            setMode(newMode);
         }
     }
 

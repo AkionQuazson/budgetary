@@ -1,0 +1,23 @@
+.App {
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+form {
+  border: 1px solid #000000;
+  border-radius: 15px;
+  background-color: #cdcdcd;
+  display: flex;
+  flex-wrap: wrap;
+  width: 400px;
+  margin: auto;
+  padding: 5px;
+}
+
+form h2 {
+  width: 400px;
+  text-align: center;
+}

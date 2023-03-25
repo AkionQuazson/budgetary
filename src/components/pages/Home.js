@@ -7,8 +7,18 @@ import '../../styles/home.css'
 const Home = (props) => {
     const {income, adjustIncome, budgets} = useContext(BudgetContext);
 
-    const budgetList = [<BudgetCard title="asdf"/>, <BudgetCard title="fdsa"/>, <BudgetCard title="qwerty"/>]
-    const {totalSpent, totalBudgeted} = {totalSpent: 1500, totalBudgeted: 1800}
+    const {totalSpent} = {totalSpent: 1500}
+    let totalBudgeted = 0;
+    const budgetList = budgets.map((bud, i) => {
+        totalBudgeted += +bud.maxValue;
+        return <BudgetCard
+            title={bud.name}
+            key={i}
+            currentAmount={0}
+            maxAmount={bud.maxValue}
+            color={bud.color}
+         />
+    })
 
     return <div className='home'>
         <div className='total-budget'> 
