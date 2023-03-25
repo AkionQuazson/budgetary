@@ -8,8 +8,8 @@ const BudgetCard = (props) => {
         const r = parseInt(col.charAt(1) + col.charAt(2), 16);
         const g = parseInt(col.charAt(3) + col.charAt(4), 16);
         const b = parseInt(col.charAt(5) + col.charAt(6), 16);
-        console.log({r,g,b})
-        return (r < 100 && g < 100 && b < 100)
+        const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        return (luma < 40)
     }
 
     return <NavLink className="card budget-card" style={{backgroundColor: color, color: (tooDark(color) ? '#fff' : '#000')}} to={`/b/${title}`}>

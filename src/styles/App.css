@@ -11,7 +11,8 @@ form {
   border-radius: 15px;
   background-color: #cdcdcd;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  
   width: 400px;
   margin: auto;
   padding: 5px;
@@ -20,4 +21,8 @@ form {
 form h2 {
   width: 400px;
   text-align: center;
+}
+
+button, input[type=submit], label {
+  user-select: none;
 }

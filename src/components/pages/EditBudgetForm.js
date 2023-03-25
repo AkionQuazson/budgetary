@@ -15,7 +15,6 @@ const EditBudgetForm = (props) => {
 
     const addSub = (e) => {
         e.preventDefault();
-        console.log({subBudgets});
         if(subText.trim() === '') {
             setSubText('');
             return;
@@ -58,7 +57,8 @@ const EditBudgetForm = (props) => {
     const displaySub = subBudgets.map((sub, i) => {
         return <li id={'subBudget' + i} key={i}>{sub.name + '  '}<button className="deleteButton" onClick={(e) => {deleteSubBudget(e)}}>X</button></li>
     })
-    
+
+
     return <form onSubmit={(e) => {createBudget(e)}}>
         <h2>New Budget</h2>
         <input type="text" id="budgetName" placeholder="BudgetName" value={budgetName} onChange={(e) => {setBudgetName(e.target.value)}}/>

@@ -8,8 +8,14 @@ const Login = (props) => {
     return <>
         <form>
             <h2>Login</h2>
-            <input type="text" id="username" value={username} onChange={(e) => {setUsername(e.target.value)}} />
-            <input type="password" id="password" value={password} onChange={(e) => {setPassword(e.target.value)}} />
+            <span>
+                <label htmlFor="username">Username</label>
+                <input type="text" id="username" value={username} onChange={(e) => {setUsername(e.target.value)}} />
+            </span>
+            <span>
+                <label htmlFor="password">Password</label>
+                <input type="password" id="password" value={password} onChange={(e) => {setPassword(e.target.value)}} />
+            </span>
             <input type="submit" />
         </form>
         <button>Register instead?</button>

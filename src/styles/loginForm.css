@@ -1,0 +1,7 @@
+form > span {
+    text-align: center;
+    margin: 5px auto;
+    width: 250px;
+    display: flex;
+    justify-content: space-between;
+}
