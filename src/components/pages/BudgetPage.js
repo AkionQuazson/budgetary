@@ -1,7 +1,9 @@
 
 
 const BudgetPage = (props) => {
-    return <div>Whole Budget</div>
+    return <div>
+        
+    </div>
 }
 
 export default BudgetPage;
