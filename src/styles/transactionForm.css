@@ -1,0 +1,12 @@
+.transaction {
+    width: 300px;
+    position: absolute;
+    left: calc(50% - 151px);
+    top: 150px;
+}
+
+textarea {
+    text-align: center;
+    border-radius: 5px;
+    margin: 5px;
+}

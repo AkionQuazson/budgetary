@@ -24,4 +24,5 @@ form h2 {
 
 button, input[type=submit], label {
   user-select: none;
+  margin: 5px auto;
 }

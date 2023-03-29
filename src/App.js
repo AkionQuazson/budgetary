@@ -10,6 +10,7 @@ import './styles/App.css'
 
 function App() {
   const error = null;
+
   return (
     <div className="App">
       <Header />

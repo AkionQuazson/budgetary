@@ -34,6 +34,7 @@ const EditBudgetForm = (props) => {
         const newBudget = {
             name: budgetName,
             maxValue: +maxValue,
+            currentSpent: 0,
             color,
             subBudgets
         }

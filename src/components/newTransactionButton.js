@@ -1,9 +1,13 @@
+import { useContext } from "react";
+import BudgetContext from "../store/budgetContext";
 
-const TransactionButton = (props) => {
-    
+const NewTransactionButton = (props) => {
+    const {budgets} = useContext(BudgetContext);
+    const {budget, subBudget} = props;
+
     const addTransaction = (e) => {
         e.preventDefault();
-
+        
     }
 
     return <button onClick={(e) => {addTransaction(e)}}>
@@ -11,4 +15,4 @@ const TransactionButton = (props) => {
     </button>
 }
 
-export default Header;
+export default NewTransactionButton;

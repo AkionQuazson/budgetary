@@ -1,8 +1,9 @@
 import SubBudgetCard from '../cards/SubBudgetCard'
 import { useParams } from 'react-router'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import BudgetContext from '../../store/budgetContext'
 import '../../styles/budgetPage.css'
+import CreateTransactionForm from '../CreateTransactionForm'
 
 const BudgetPage = () => {
     const params = useParams();
@@ -11,25 +12,31 @@ const BudgetPage = () => {
     const budgetData = budgets.find((bud) => {
         return bud.name === budget;
     });
-    const {name, color, maxValue, subBudgets} = budgetData;
+    const {name, color, maxValue, currentSpent, subBudgets} = budgetData;
 
-    let totalSpent = 0;
+    const [transaction, setTransaction] = useState(true);
+
+    let totalSpent = currentSpent;
     const displaySubBudgets = subBudgets.map((sub, i) => {
         totalSpent += sub.amountSpent;
         return <SubBudgetCard
             title={sub.name}
             currentAmount={sub.amountSpent}
             color={color}
+            changeTransaction={setTransaction}
         />
     })
 
-    return <div>
-        <h2>{name}</h2>
-        <h3>{totalSpent}/{maxValue}</h3>
-        <div className='flexHorizontal'>
-            {displaySubBudgets}
+    return <>
+        <div>
+            <h2>{name}</h2>
+            <h3>{totalSpent}/{maxValue}</h3>
+            <div className='flexHorizontal'>
+                {displaySubBudgets}
+            </div>
         </div>
-    </div>
+        {transaction && <CreateTransactionForm />}
+    </>
 }
 
 export default BudgetPage;
