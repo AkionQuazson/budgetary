@@ -6,7 +6,7 @@ import '../../styles/budgetForm.css'
 const EditBudgetForm = (props) => {
     const [budgetName, setBudgetName] = useState('');
     const [maxValue, setMaxValue] = useState(0);
-    const [color, setColor] = useState('#000000');
+    const [color, setColor] = useState('#'+ Math.floor(Math.random() * 1000000));
     const [subText, setSubText] = useState('');
     const [subBudgets, setSubBudgets] = useState([]);
 
@@ -20,7 +20,7 @@ const EditBudgetForm = (props) => {
             return;
         }
         let tempSubs = [...subBudgets];
-        tempSubs.push({name:subText});
+        tempSubs.push({name:subText, amountSpent:0});
         setSubBudgets(tempSubs);
         setSubText('');
     }
