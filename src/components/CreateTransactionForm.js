@@ -3,7 +3,7 @@ import BudgetContext from '../store/budgetContext'
 import '../styles/transactionForm.css'
 
 const CreateTransactionForm = (props) => {
-    const {budget, subBudget, closeForm} = props;
+    const {budget, color, subBudget, closeForm} = props;
     const {addTransaction} = useContext(BudgetContext);
     const [value, setValue] = useState(15);
     const [description, setDescription] = useState('');
@@ -20,7 +20,7 @@ const CreateTransactionForm = (props) => {
         closeForm({budget, subBudget, active:false})
     }
 
-    return <div className="background">
+    return <div className="background" style={{backgroundColor:`${color}ad`}} >
         <form className="transaction" onSubmit={(e) => {submitForm(e)}}>
             <h3>Add Transaction</h3>
             <div className='currency'>

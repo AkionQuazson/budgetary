@@ -35,7 +35,7 @@ const BudgetPage = () => {
                 {displaySubBudgets}
             </div>
         </div>
-        {transaction.active && <CreateTransactionForm budget={transaction.budget} subBudget={transaction.subBudget} closeForm={setTransaction} />}
+        {transaction.active && <CreateTransactionForm color={color} budget={transaction.budget} subBudget={transaction.subBudget} closeForm={setTransaction} />}
     </>
 }
 
