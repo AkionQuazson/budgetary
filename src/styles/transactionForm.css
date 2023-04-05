@@ -1,8 +1,16 @@
+.background {
+    width: 100vw;
+    height: calc(100vh - 72px);
+    background-color: #8d9bb7ad;
+    position: absolute;
+    top: 72px;
+}
+
 .transaction {
     width: 300px;
     position: absolute;
     left: calc(50% - 151px);
-    top: 150px;
+    top: 100px;
 }
 
 textarea {

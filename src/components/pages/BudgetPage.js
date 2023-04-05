@@ -14,7 +14,7 @@ const BudgetPage = () => {
     });
     const {name, color, maxValue, currentSpent, subBudgets} = budgetData;
 
-    const [transaction, setTransaction] = useState(true);
+    const [transaction, setTransaction] = useState({active:true, budget, subBudget:null});
 
     let totalSpent = currentSpent;
     const displaySubBudgets = subBudgets.map((sub, i) => {
@@ -35,7 +35,7 @@ const BudgetPage = () => {
                 {displaySubBudgets}
             </div>
         </div>
-        {transaction && <CreateTransactionForm />}
+        {transaction.active && <CreateTransactionForm budget={transaction.budget} subBudget={transaction.subBudget} closeForm={setTransaction} />}
     </>
 }
 
