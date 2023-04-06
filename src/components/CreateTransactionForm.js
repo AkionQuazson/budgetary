@@ -20,7 +20,7 @@ const CreateTransactionForm = (props) => {
         closeForm({budget, subBudget, active:false})
     }
 
-    return <div className="background" style={{backgroundColor:`${color}ad`}} >
+    return <div className="background" style={{backgroundColor:`${color}ad`}} onClick={()=>closeForm({budget, subBudget, active:false})} >
         <form className="transaction" onSubmit={(e) => {submitForm(e)}}>
             <h3>Add Transaction</h3>
             <div className='currency'>

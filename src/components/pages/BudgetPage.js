@@ -4,10 +4,11 @@ import { useContext, useState } from 'react'
 import BudgetContext from '../../store/budgetContext'
 import '../../styles/budgetPage.css'
 import CreateTransactionForm from '../CreateTransactionForm'
+import TransactionDisplay from '../cards/TransactionDisplay'
 
 const BudgetPage = () => {
     const params = useParams();
-    const {budgets} = useContext(BudgetContext);
+    const {budgets, transactions} = useContext(BudgetContext);
     const {budget} = params;
     const budgetData = budgets.find((bud) => {
         return bud.name === budget;
@@ -27,12 +28,27 @@ const BudgetPage = () => {
         />
     })
 
+    const displayTransactions = transactions.filter((tran) => {
+        return tran.budget === budget
+    }).map((tran, i) => {
+        return <TransactionDisplay 
+            key={i}
+            budget={tran.budget}
+            subBudget={tran.subBudget}
+            value={tran.value}
+            description={tran.description}
+        />
+    })
+
     return <>
         <div>
             <h2>{name}</h2>
             <h3>{totalSpent}/{maxValue}</h3>
             <div className='flexHorizontal'>
                 {displaySubBudgets}
+            </div>
+            <div>
+                {displayTransactions}
             </div>
         </div>
         {transaction.active && <CreateTransactionForm color={color} budget={transaction.budget} subBudget={transaction.subBudget} closeForm={setTransaction} />}

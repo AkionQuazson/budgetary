@@ -1,7 +1,12 @@
 
 
 const TransactionDisplay = (props) => {
-    return <div>Transaction</div>
+    const {budget, subBudget, value, description} = props
+    return <div>
+        {subBudget}
+        {value}
+        {description}
+    </div>
 }
 
 export default TransactionDisplay;
