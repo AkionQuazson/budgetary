@@ -8,6 +8,7 @@ const BudgetContext = createContext({
 export const BudgetContextProvider = (props) => {
     const [income, setIncome] = useState(0.00);
     const [budgets, setBudgets] = useState([]);
+    const [budgetTarget, setBudgetTarget] = useState('');
     const [transactions, setTransactions] = useState([]);
     const [mode, setMode] = useState('add');
 
@@ -15,6 +16,7 @@ export const BudgetContextProvider = (props) => {
     const contextValue = {
         income,
         budgets,
+        budgetTarget,
         transactions,
         mode,
         adjustIncome: (number) => {
@@ -40,6 +42,10 @@ export const BudgetContextProvider = (props) => {
                 default:
                     console.log('undefined action');
             }
+            setBudgetTarget('');
+        },
+        targetBudget: (bud) => {
+            setBudgetTarget(bud);
         },
         addTransaction: (payload) => {
             const tempTransactions = [...transactions, payload]

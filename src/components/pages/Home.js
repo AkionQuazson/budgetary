@@ -1,11 +1,15 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import BudgetCard from '../cards/BudgetCard';
 import BudgetContext from '../../store/budgetContext';
 import '../../styles/home.css'
 
 const Home = (props) => {
-    const {income, adjustIncome, budgets} = useContext(BudgetContext);
+    const {income, targetBudget, adjustIncome, budgets} = useContext(BudgetContext);
+
+    useEffect(() => {
+        targetBudget('');
+    }, [])
 
     const {totalSpent} = {totalSpent: 1500}
     let totalBudgeted = 0;
@@ -35,8 +39,7 @@ const Home = (props) => {
         <div className='budget-list'>
             {budgetList}
         </div>
-        <NavLink className='addButton' to="/edit">+</NavLink>
-        {/* <button className='addButton' onClick={(e) => addBudget(e)}>+</button> */}
+        <NavLink className='cornerButton' to="/edit">+</NavLink>
     </div>
 }
 

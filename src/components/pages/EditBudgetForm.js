@@ -1,17 +1,31 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import BudgetContext from "../../store/budgetContext";
 import '../../styles/budgetForm.css'
 
 const EditBudgetForm = (props) => {
+    const {mode, editMode, editBudgets, budgets, budgetTarget} = useContext(BudgetContext);
+    const currentBudget = budgets.find((bud) => {return bud.name === budgetTarget});
+    const navigate = useNavigate();
+
     const [budgetName, setBudgetName] = useState('');
     const [maxValue, setMaxValue] = useState(0);
     const [color, setColor] = useState('#'+ Math.floor(Math.random() * 1000000));
     const [subText, setSubText] = useState('');
     const [subBudgets, setSubBudgets] = useState([]);
 
-    const {mode, editBudgets} = useContext(BudgetContext);
-    const navigate = useNavigate();
+    useEffect(() => {
+        if (currentBudget) {
+            setBudgetName(currentBudget.name);
+            setMaxValue(currentBudget.maxValue);
+            setColor(currentBudget.color);
+            setSubBudgets(currentBudget.subBudgets);
+            editMode('change');
+        }
+        else {
+            editMode('add')
+        }
+    }, [currentBudget]);
 
     const addSub = (e) => {
         e.preventDefault();

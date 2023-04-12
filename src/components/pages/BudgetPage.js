@@ -1,5 +1,5 @@
 import SubBudgetCard from '../cards/SubBudgetCard'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { useContext, useState } from 'react'
 import BudgetContext from '../../store/budgetContext'
 import '../../styles/budgetPage.css'
@@ -8,7 +8,8 @@ import TransactionDisplay from '../cards/TransactionDisplay'
 
 const BudgetPage = () => {
     const params = useParams();
-    const {budgets, transactions} = useContext(BudgetContext);
+    const navigate = useNavigate();
+    const {budgets, transactions, targetBudget} = useContext(BudgetContext);
     const {budget} = params;
     const budgetData = budgets.find((bud) => {
         return bud.name === budget;
@@ -16,6 +17,11 @@ const BudgetPage = () => {
     const {name, color, maxValue, currentSpent, subBudgets} = budgetData;
 
     const [transaction, setTransaction] = useState({active:true, budget, subBudget:null});
+
+    const editThisBudget = (e) => {
+        targetBudget(budget);
+        navigate('/edit');
+    }
 
     let totalSpent = currentSpent;
     const displaySubBudgets = subBudgets.map((sub, i) => {
@@ -52,6 +58,7 @@ const BudgetPage = () => {
             </div>
         </div>
         {transaction.active && <CreateTransactionForm color={color} budget={transaction.budget} subBudget={transaction.subBudget} closeForm={setTransaction} />}
+        <button className="cornerButton" onClick={(e) => editThisBudget(e)} >Edit</button>
     </>
 }
 
