@@ -22,6 +22,7 @@ export const BudgetContextProvider = (props) => {
         if (getData.transactions) {
             setTransactions(getData.transactions);
         }
+        setIncome(getData.income);
     }, []);
     
     const contextValue = {
@@ -32,6 +33,7 @@ export const BudgetContextProvider = (props) => {
         mode,
         adjustIncome: (number) => {
             setIncome(number);
+            api.postBudgets(budgets, transactions, number);
         },
         editBudgets: (change) => {
             const {type, target, payload} = change;

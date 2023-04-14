@@ -29,7 +29,10 @@ const Home = (props) => {
             <h3>Monthly Income</h3>
             <div className='currency'>
                 <span>$</span>
-                <input type='number' id='income' min='0.00' step='.01' value={income} onChange={(e) => adjustIncome(e.target.value)} />
+                <input type='number' id='income' min='0.00' step='.01' value={income} onChange={(e) => {
+                    adjustIncome(e.target.value);
+                    console.log(e.target.value)
+                }} />
             </div>
             <h3>Amount Budgeted</h3>
             <p className={(totalBudgeted > income) ? 'above-max' : ''}>{totalBudgeted}/{income}</p>
