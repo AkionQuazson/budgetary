@@ -9,7 +9,7 @@ const Home = (props) => {
 
     useEffect(() => {
         targetBudget('');
-    }, [])
+    }, [targetBudget])
 
     const {totalSpent} = {totalSpent: 1500}
     let totalBudgeted = 0;

@@ -16,7 +16,7 @@ const BudgetPage = () => {
     });
     const {name, color, maxValue, currentSpent, subBudgets} = budgetData;
 
-    const [transaction, setTransaction] = useState({active:true, budget, subBudget:null});
+    const [transaction, setTransaction] = useState({active:false, budget, subBudget:null});
 
     const editThisBudget = (e) => {
         targetBudget(budget);
@@ -28,6 +28,7 @@ const BudgetPage = () => {
         totalSpent += sub.amountSpent;
         return <SubBudgetCard
             title={sub.name}
+            budget={budget}
             currentAmount={sub.amountSpent}
             color={color}
             changeTransaction={setTransaction}

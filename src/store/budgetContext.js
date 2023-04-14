@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import api from "./api";
 
 const BudgetContext = createContext({
     income: 0,
@@ -6,12 +7,22 @@ const BudgetContext = createContext({
 });
 
 export const BudgetContextProvider = (props) => {
+    
     const [income, setIncome] = useState(0.00);
     const [budgets, setBudgets] = useState([]);
     const [budgetTarget, setBudgetTarget] = useState('');
     const [transactions, setTransactions] = useState([]);
     const [mode, setMode] = useState('add');
-
+    
+    useEffect(()=> {
+        const getData = api.getBudgets();
+        if (getData.budgets) {
+            setBudgets(getData.budgets);
+        }
+        if (getData.transactions) {
+            setTransactions(getData.transactions);
+        }
+    }, []);
     
     const contextValue = {
         income,
@@ -30,14 +41,17 @@ export const BudgetContextProvider = (props) => {
                 case 'add': 
                     modBudgets.push(payload)
                     setBudgets(modBudgets);
+                    api.postBudgets(modBudgets, transactions, income);
                     break;
                 case 'remove':
                     modBudgets.splice(target, 1);
                     setBudgets(modBudgets);
+                    api.postBudgets(modBudgets, transactions, income);
                     break;
                 case 'change':
                     modBudgets.splice(target, 1, payload);
                     setBudgets(modBudgets);
+                    api.postBudgets(modBudgets, transactions, income);
                     break;
                 default:
                     console.log('undefined action');
@@ -50,7 +64,7 @@ export const BudgetContextProvider = (props) => {
         addTransaction: (payload) => {
             const tempTransactions = [...transactions, payload]
             setTransactions(tempTransactions);
-            console.log(tempTransactions)
+            api.postBudgets(budgets, tempTransactions, income);
         },
         editMode: (newMode) => {
             setMode(newMode);

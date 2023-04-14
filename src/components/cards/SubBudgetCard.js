@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import '../../styles/budgetCard.css';
 
 const SubBudgetCard = (props) => {
-    const {title, currentAmount, color} = props
+    const {title, currentAmount, budget, changeTransaction, color} = props
     
     const tooDark = (col) => {
         const r = parseInt(col.charAt(1) + col.charAt(2), 16);
@@ -12,13 +12,18 @@ const SubBudgetCard = (props) => {
         return (luma < 40)
     }
 
+    const addTrans = (e) => {
+        e.preventDefault();
+        changeTransaction({active:true, budget:budget, subBudget:title})
+    }
+
     return <div 
         className="card budget-card" 
         style={{backgroundColor: color, color: (tooDark(color) ? '#fff' : '#000')}} 
-        onClick={(e) => {alert("Can't add transactions yet")}}
     >
         <h3>{title}</h3>
         <p>{currentAmount}</p>
+        <button onClick={(e) => {addTrans(e)}}>+</button>
     </div>
 }
 

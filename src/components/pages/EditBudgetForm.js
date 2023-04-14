@@ -25,7 +25,7 @@ const EditBudgetForm = (props) => {
         else {
             editMode('add')
         }
-    }, [currentBudget]);
+    }, [currentBudget, editMode]);
 
     const addSub = (e) => {
         e.preventDefault();

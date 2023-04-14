@@ -21,7 +21,11 @@ const CreateTransactionForm = (props) => {
     }
 
     return <div className="background" style={{backgroundColor:`${color}ad`}} onClick={()=>closeForm({budget, subBudget, active:false})} >
-        <form className="transaction" onSubmit={(e) => {submitForm(e)}}>
+        <form 
+            className="transaction" 
+            onSubmit={(e) => {submitForm(e)}}
+            onClick={(e) => {e.stopPropagation()}}
+        >
             <h3>Add Transaction</h3>
             <div className='currency'>
                 <span>$</span>
