@@ -10,7 +10,7 @@ const EditBudgetForm = (props) => {
 
     const [budgetName, setBudgetName] = useState('');
     const [maxValue, setMaxValue] = useState(0);
-    const [color, setColor] = useState('#'+ Math.floor(Math.random() * 1000000));
+    const [color, setColor] = useState('#'+ Math.floor(Math.random() * 16777215).toString(16));
     const [subText, setSubText] = useState('');
     const [subBudgets, setSubBudgets] = useState([]);
 
@@ -53,12 +53,35 @@ const EditBudgetForm = (props) => {
             subBudgets
         }
         const change = {
-            type: mode,
+            type: 'add',
             payload: newBudget,
             target: null
         }
         editBudgets(change)
         navigate('/');
+    }
+
+    const editBudget = (e) => {
+        e.preventDefault();
+        const update = {
+            name: budgetName,
+            maxValue: +maxValue,
+            currentSpent: 0,
+            color,
+            subBudgets
+        }
+        const change = {
+            type: 'change',
+            target: budgetTarget,
+            payload: update
+        }
+        editBudgets(change);
+        navigate('/');
+    }
+
+    const deleteBudget = (e) => {
+        e.preventDefault();
+
     }
 
     const deleteSubBudget = (e) => {
@@ -74,7 +97,11 @@ const EditBudgetForm = (props) => {
     })
 
 
-    return <form onSubmit={(e) => {createBudget(e)}}>
+    return <div className="background" onClick={(e) => navigate('/')}>
+    <form 
+        onSubmit={(e) => {mode === 'add' ? createBudget(e) : editBudget(e)}}
+        onClick={(e) => e.stopPropagation()}
+    >
         <h2>New Budget</h2>
         <input type="text" id="budgetName" placeholder="BudgetName" value={budgetName} onChange={(e) => {setBudgetName(e.target.value)}}/>
         <div className="halfContainer">
@@ -92,6 +119,7 @@ const EditBudgetForm = (props) => {
         </div>
         <input type="submit" ></input>
     </form>
+    </div>
 }
 
 export default EditBudgetForm;

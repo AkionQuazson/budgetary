@@ -36,9 +36,10 @@ export const BudgetContextProvider = (props) => {
             api.postBudgets(budgets, transactions, number);
         },
         editBudgets: (change) => {
-            const {type, target, payload} = change;
-
+            let {type, target, payload} = change;
+            
             let modBudgets = [...budgets];
+            target = modBudgets.findIndex((bud) => {return bud.name === target});
             switch(type) {
                 case 'add': 
                     modBudgets.push(payload)
@@ -47,12 +48,14 @@ export const BudgetContextProvider = (props) => {
                     break;
                 case 'remove':
                     modBudgets.splice(target, 1);
+                    //find all related transactions, and delete. Refactor into backend?
                     setBudgets(modBudgets);
                     api.postBudgets(modBudgets, transactions, income);
                     break;
                 case 'change':
                     modBudgets.splice(target, 1, payload);
                     setBudgets(modBudgets);
+                    //If a subbudget is deleted, find related transactions and remove the subbudget
                     api.postBudgets(modBudgets, transactions, income);
                     break;
                 default:

@@ -1,7 +1,6 @@
 .background {
     width: 100vw;
     height: calc(100vh - 72px);
-    background-color: #8d9bb7ad;
     position: absolute;
     top: 72px;
 }
