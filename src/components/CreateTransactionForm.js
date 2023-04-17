@@ -29,7 +29,7 @@ const CreateTransactionForm = (props) => {
             <h3>Add Transaction</h3>
             <div className='currency'>
                 <span>$</span>
-                <input type='number' min='0.00' step='.01' value={value} onChange={(e) => {setValue(e.target.value)}} />
+                <input type='number' min='0.00' step='.01' value={value} onChange={(e) => {setValue(+e.target.value)}} />
             </div>
             <textarea name="descriptionArea" id="descriptionArea" placeholder='Description' rows={3} value={description} onChange={(e) => {setDescription(e.target.value)}} ></textarea>
             <input type="submit" />
