@@ -10,13 +10,17 @@ const BudgetPage = () => {
     const params = useParams();
     const navigate = useNavigate();
     const {budgets, transactions, targetBudget} = useContext(BudgetContext);
+    const [transaction, setTransaction] = useState({active:false, budget:null, subBudget:null});
     const {budget} = params;
     const budgetData = budgets.find((bud) => {
         return bud.name === budget;
     });
+    if (!budgetData) {
+        navigate('/');
+        return<div></div>;
+    }
     const {name, color, maxValue, currentSpent, subBudgets} = budgetData;
 
-    const [transaction, setTransaction] = useState({active:false, budget, subBudget:null});
 
     const editThisBudget = (e) => {
         targetBudget(budget);
@@ -27,6 +31,7 @@ const BudgetPage = () => {
     const displaySubBudgets = subBudgets.map((sub, i) => {
         totalSpent += sub.amountSpent;
         return <SubBudgetCard
+            key={i}
             title={sub.name}
             budget={budget}
             currentAmount={sub.amountSpent}

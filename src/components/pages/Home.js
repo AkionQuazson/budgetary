@@ -5,20 +5,22 @@ import BudgetContext from '../../store/budgetContext';
 import '../../styles/home.css'
 
 const Home = (props) => {
-    const {income, targetBudget, adjustIncome, budgets} = useContext(BudgetContext);
+    const {income, targetBudget, adjustIncome, budgets, transactions} = useContext(BudgetContext);
 
     useEffect(() => {
         targetBudget('');
     }, [targetBudget])
 
-    const {totalSpent} = {totalSpent: 1500}
+    const totalSpent = transactions.reduce((t, v = 0) => {
+        return t + v.value}, 0);
     let totalBudgeted = 0;
     const budgetList = budgets.map((bud, i) => {
         totalBudgeted += +bud.maxValue;
+        const budSpent = transactions.filter((t) => t.budget === bud.name).reduce((t, v) => t + v.value, 0);
         return <BudgetCard
             title={bud.name}
             key={i}
-            currentAmount={0}
+            currentAmount={budSpent}
             maxAmount={bud.maxValue}
             color={bud.color}
          />
