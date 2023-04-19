@@ -13,6 +13,7 @@ export const BudgetContextProvider = (props) => {
     const [budgetTarget, setBudgetTarget] = useState('');
     const [transactions, setTransactions] = useState([]);
     const [mode, setMode] = useState('add');
+    const [error, setError] = useState(null);
     
     useEffect(()=> {
         const getData = api.getBudgets();
@@ -31,6 +32,7 @@ export const BudgetContextProvider = (props) => {
         budgetTarget,
         transactions,
         mode,
+        error,
         adjustIncome: (number) => {
             setIncome(number);
             api.postBudgets(budgets, transactions, number);
