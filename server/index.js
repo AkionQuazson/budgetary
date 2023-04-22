@@ -11,6 +11,8 @@ const {Budget} = require('./models/budget')
 const {SubBudget} = require('./models/sub_budget')
 const {Transaction} = require('./models/transaction');
 
+const { login, register } = require('./controllers/auth');
+
 const app = express();
 
 app.use(express.json());
@@ -23,8 +25,8 @@ SubBudget.belongsTo(Budget);
 Budget.hasMany(Transaction);
 SubBudget.hasMany(Transaction);
 
-app.get('/register', ()=>console.log('register'));
-app.get('/login',  ()=>console.log('login'));
+app.get('/register', register);
+app.get('/login',  login);
 
 app.get('/budgets',  ()=>console.log('getBudgets'));
 app.post('/budgets',  ()=>console.log('addBudget'));
