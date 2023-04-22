@@ -11,7 +11,8 @@ module.exports = {
             allowNull: false,
             primaryKey: true
         },
-        username: DataTypes.STRING,
-        hashedPass: DataTypes.STRING
+        description: DataTypes.STRING,
+        amount: DataTypes.FLOAT,
+        month_applicable: DataTypes.INTEGER
     })
 }

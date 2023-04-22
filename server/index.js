@@ -5,11 +5,23 @@ const cors = require('cors');
 
 const {SERVER_PORT} = process.env;
 
+const {sequelize} = require('./util/database');
+const {User} = require('./models/user')
+const {Budget} = require('./models/budget')
+const {SubBudget} = require('./models/sub_budget')
+const {Transaction} = require('./models/transaction');
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+
+User.hasMany(Budget);
+Budget.belongsTo(User);
+Budget.hasMany(SubBudget);
+SubBudget.belongsTo(Budget);
+Budget.hasMany(Transaction);
+SubBudget.hasMany(Transaction);
 
 app.get('/register', ()=>console.log('register'));
 app.get('/login',  ()=>console.log('login'));
