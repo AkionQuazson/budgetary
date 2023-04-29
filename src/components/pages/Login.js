@@ -1,27 +1,38 @@
-import { useState } from "react";
+import axios from 'axios';
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
+import AuthContext from '../../store/loginContext'
 import '../../styles/loginForm.css'
 
 const Login = (props) => {
+    const loginCtx = useContext(AuthContext);
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [mode, setMode] = useState('Login');
+    const [mode, setMode] = useState('login');
     const navigate = useNavigate();
 
     const toggleMode = () => {
-        if(mode === 'Login') {
-            setMode('Register');
+        if(mode === 'login') {
+            setMode('register');
         }
         else {
-            setMode('Login');
+            setMode('login');
         }
     }
 
     const submmitData = (e) => {
         e.preventDefault();
-        const dataToSend = {username, password, mode};
-        console.log(dataToSend);
-        navigate('/')
+        const dataToSend = {username, password};
+        axios.post(`/${mode}`, dataToSend)
+            .then(({data}) => {
+                loginCtx.login(data)
+                navigate('/')
+            })
+            .catch((err) => {
+                setPassword('');
+                loginCtx.setError(err);
+            })
     }
 
     return <>
@@ -37,7 +48,7 @@ const Login = (props) => {
             </span>
             <input type="submit" />
         </form>
-        <button onClick={() => {toggleMode()}}>{mode === "Login" ? "Register" : "Login"} instead?</button>
+        <button onClick={() => {toggleMode()}}>{mode === "login" ? "Register" : "Login"} instead?</button>
     </>
 }
 

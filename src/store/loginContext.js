@@ -48,6 +48,7 @@ export const AuthContextProvider = (props) => {
 
   const [token, setToken] = useState(initialToken)
   const [userId, setUserId] = useState(null)
+  const [error, setError] = useState(null)
 
 
   const logout = () => {
@@ -74,7 +75,9 @@ export const AuthContextProvider = (props) => {
     token,
     login,
     logout, 
-    userId
+    userId,
+    error,
+    setError
   }
 
   return (

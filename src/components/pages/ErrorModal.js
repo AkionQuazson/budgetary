@@ -1,9 +1,14 @@
-
+import '../../styles/error.css'
 
 const ErrorModal = (props) => {
-    return <div className="background" style={{backgroundColor:'#e96464af'}}>
-        <div>
-            Error
+    const {error, clearError} = props
+    return <div 
+        className="background" 
+        style={{backgroundColor:'#e96464af'}}
+        onClick={(e) => {clearError(e)}}
+    >
+        <div className='panel'>
+            {error.message}
         </div>
     </div>
 }

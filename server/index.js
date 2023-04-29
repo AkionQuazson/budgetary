@@ -25,8 +25,8 @@ SubBudget.belongsTo(Budget);
 Budget.hasMany(Transaction);
 SubBudget.hasMany(Transaction);
 
-app.get('/register', register);
-app.get('/login',  login);
+app.post('/register', register);
+app.post('/login',  login);
 
 app.get('/budgets',  ()=>console.log('getBudgets'));
 app.post('/budgets',  ()=>console.log('addBudget'));

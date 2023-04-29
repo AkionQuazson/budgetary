@@ -12,8 +12,8 @@ module.exports = {
             primaryKey: true
         },
         budget_name: DataTypes.STRING,
-        amount_used: DataTypes.FLOAT,
-        amount_allotted: DataTypes.FLOAT,
+        current_amount: DataTypes.FLOAT,
+        monthly_amount: DataTypes.FLOAT,
         month_applicable: DataTypes.INTEGER
     })
 }

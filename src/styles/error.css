@@ -1,0 +1,12 @@
+.panel {
+    width: 410px;
+    height: 150px;
+    font-size: larger;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #adadad;
+    border: 1px solid #000;
+    margin: 15px auto;
+    border-radius: 15px;
+}

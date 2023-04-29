@@ -75,7 +75,8 @@ export const BudgetContextProvider = (props) => {
         },
         editMode: (newMode) => {
             setMode(newMode);
-        }
+        },
+        setError
     }
 
     return <BudgetContext.Provider value={contextValue}>
