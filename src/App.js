@@ -13,8 +13,8 @@ import './styles/App.css'
 
 function App() {
   const [error, setError] = useState(null);
-  const {token, error: budgetError, setError: setBudgetError} = useContext(BudgetContext)
-  const {error: loginError, setError: setLoginError} = useContext(AuthContext)
+  const {error: budgetError, setError: setBudgetError} = useContext(BudgetContext)
+  const {token, error: loginError, setError: setLoginError} = useContext(AuthContext)
 
   const ifToken = token !== null && token !== undefined
 
@@ -30,15 +30,13 @@ function App() {
     setError(null);
   }
 
-  console.log(token)
-
   return (
     <div className="App">
       <Header />
       <div className='main'>
       <Routes>
         <Route path='/' element={(ifToken) ? <Home/> : <Navigate to='/login'/>} />
-        <Route path='/login' element={<Login/>} />
+        <Route path='/login' element={(!ifToken) ? <Login/> : <Navigate to='/'/>} />
         <Route path='/b/:budget' element={(ifToken) ? <BudgetPage/> : <Navigate to='/login'/>} />
         <Route path='/edit' element={(ifToken) ? <EditBudgetForm/> : <Navigate to='/login'/>} />
         <Route path='*' element={<Navigate to='/'/>} />

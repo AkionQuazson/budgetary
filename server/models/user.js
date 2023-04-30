@@ -12,6 +12,7 @@ module.exports = {
             primaryKey: true
         },
         username: DataTypes.STRING,
-        hashedPass: DataTypes.STRING
+        hashedPass: DataTypes.STRING,
+        income: DataTypes.FLOAT
     })
 }

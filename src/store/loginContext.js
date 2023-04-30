@@ -40,8 +40,8 @@ const getLocalData = () => {
 
 export const AuthContextProvider = (props) => {
   const localData = getLocalData()
-  
-  let initialToken
+
+  let initialToken = null;
   if (localData) {
     initialToken = localData.token
   }
@@ -64,7 +64,6 @@ export const AuthContextProvider = (props) => {
   const login = ({token: tok, exp, userId}) => {
     setToken(tok);
     setUserId(userId);
-    console.log(tok)
     localStorage.setItem('token', token)
     localStorage.setItem('exp', exp)
 
