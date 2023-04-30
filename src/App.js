@@ -13,14 +13,16 @@ import './styles/App.css'
 
 function App() {
   const [error, setError] = useState(null);
-  const {error: budgetError, setError: setBudgetError} = useContext(BudgetContext)
+  const {token, error: budgetError, setError: setBudgetError} = useContext(BudgetContext)
   const {error: loginError, setError: setLoginError} = useContext(AuthContext)
+
+  const ifToken = token !== null && token !== undefined
 
   useEffect(() => {
     if (loginError) setError(loginError);
     if (budgetError) setError(budgetError);
-  }, [budgetError, loginError])
-
+  }, [budgetError, loginError, token])
+  
   const clearError = (e) => {
     e.preventDefault();
     setBudgetError(null);
@@ -28,15 +30,17 @@ function App() {
     setError(null);
   }
 
+  console.log(token)
+
   return (
     <div className="App">
       <Header />
       <div className='main'>
       <Routes>
-        <Route path='/' element={<Home/>} />
+        <Route path='/' element={(ifToken) ? <Home/> : <Navigate to='/login'/>} />
         <Route path='/login' element={<Login/>} />
-        <Route path='/b/:budget' element={<BudgetPage/>} />
-        <Route path='/edit' element={<EditBudgetForm/>} />
+        <Route path='/b/:budget' element={(ifToken) ? <BudgetPage/> : <Navigate to='/login'/>} />
+        <Route path='/edit' element={(ifToken) ? <EditBudgetForm/> : <Navigate to='/login'/>} />
         <Route path='*' element={<Navigate to='/'/>} />
       </Routes>
       {error && <ErrorModal error={error} clearError={clearError} />}

@@ -1,7 +1,8 @@
 import '../../styles/error.css'
 
 const ErrorModal = (props) => {
-    const {error, clearError} = props
+    const {error, clearError} = props;
+    console.log(error)
     return <div 
         className="background" 
         style={{backgroundColor:'#e96464af'}}

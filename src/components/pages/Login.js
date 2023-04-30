@@ -24,8 +24,9 @@ const Login = (props) => {
     const submmitData = (e) => {
         e.preventDefault();
         const dataToSend = {username, password};
-        axios.post(`https://localhost:4005/${mode}`, dataToSend)
+        axios.post(`http://localhost:4005/${mode}`, dataToSend)
             .then(({data}) => {
+                console.log(data)
                 loginCtx.login(data)
                 navigate('/')
             })

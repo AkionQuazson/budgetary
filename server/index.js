@@ -38,4 +38,8 @@ app.post('/transactions',  ()=>console.log('addTransaction'));
 app.put('/transactions/:id',  ()=>console.log('editTransaction'));
 app.delete('/transactions/:id',  ()=>console.log('deleteTransaction'));
 
-app.listen(SERVER_PORT, () => console.log(`Running on ${SERVER_PORT}`));
+sequelize.sync()
+.then(() => {
+    app.listen(SERVER_PORT, () => console.log(`Running on ${SERVER_PORT}`));
+})
+.catch((error) => console.log(error));
