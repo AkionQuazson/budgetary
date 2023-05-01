@@ -108,7 +108,7 @@ const EditBudgetForm = (props) => {
             <div className="half">
             <div className='currency'>
                 <span>$</span>
-                <input type='number' min='0.00' step='.01' value={maxValue} onChange={(e) => setMaxValue(e.target.value)} />
+                <input type='number' min='0.00' step='1' value={maxValue} onChange={(e) => setMaxValue(e.target.value)} />
             </div>
                 <input type="color" id="color" onChange={(e) => {setColor(e.target.value)}} value={color} />
             </div>

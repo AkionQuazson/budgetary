@@ -22,6 +22,7 @@ const login = async (req, res) => {
                 res.status(200).send({
                     username: foundUser.dataValues.username,
                     userId: foundUser.dataValues.id,
+                    income: foundUser.dataValues.income,
                     token,
                     exp
                 })
@@ -50,12 +51,13 @@ const register = async (req, res) => {
         else {
             const salt = bcrypt.genSaltSync(10);
             const hashedPass = bcrypt.hashSync(password, salt);
-            const newUser = await User.create({username, hashedPass})
+            const newUser = await User.create({username, hashedPass, income:0})
             const token = createToken(newUser.dataValues.username, newUser.dataValues.id);
             const exp = Date.now() + 1000 * 60 * 60 * 48;
             res.status(200).send({
                 username: newUser.dataValues.username,
                 userId: newUser.dataValues.id,
+                income: newUser.dataValues.income,
                 token,
                 exp
             })

@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback, createContext } from 'react'
+import { useState, useEffect, useCallback, createContext, useContext } from 'react'
+import BudgetContext from './budgetContext'
 
 let logoutTimer;
 
@@ -50,6 +51,7 @@ export const AuthContextProvider = (props) => {
   const [userId, setUserId] = useState(null)
   const [error, setError] = useState(null)
 
+  const {adjustIncome} = useContext(BudgetContext);
 
   const logout = () => {
     setToken(null);
@@ -61,11 +63,12 @@ export const AuthContextProvider = (props) => {
     }
   }
 
-  const login = ({token: tok, exp, userId}) => {
-    setToken(tok);
+  const login = ({token, income, exp, userId}) => {
+    setToken(token);
     setUserId(userId);
     localStorage.setItem('token', token)
     localStorage.setItem('exp', exp)
+    adjustIncome(income)
 
     const remainingTime = calculateRemainingTime(exp);
     logoutTimer = setTimeout(logout, remainingTime);

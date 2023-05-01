@@ -1,10 +1,18 @@
-const getTransactions = () => {};
+const getTransactions = (req, res) => {
 
-const addTransaction = () => {};
+};
 
-const editTransaction = () => {};
+const addTransaction = (req, res) => {
 
-const deleteTransaction = () => {};
+};
+
+const editTransaction = (req, res) => {
+
+};
+
+const deleteTransaction = (req, res) => {
+    
+};
 
 module.exports = {
     getTransactions,

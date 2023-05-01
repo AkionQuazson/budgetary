@@ -27,6 +27,7 @@ SubBudget.hasMany(Transaction);
 
 app.post('/register', register);
 app.post('/login',  login);
+app.post('/income',  ()=>console.log('setIncome'));
 
 app.get('/budgets',  ()=>console.log('getBudgets'));
 app.post('/budgets',  ()=>console.log('addBudget'));

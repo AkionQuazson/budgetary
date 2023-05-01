@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import {Routes, Route, Navigate} from 'react-router-dom';
+import {Routes, Route, Navigate, useLocation} from 'react-router-dom';
 import Home from './components/pages/Home';
 import EditBudgetForm from './components/pages/EditBudgetForm';
 import ErrorModal from './components/pages/ErrorModal';
@@ -16,15 +16,20 @@ function App() {
   const {error: budgetError, setError: setBudgetError} = useContext(BudgetContext)
   const {token, error: loginError, setError: setLoginError} = useContext(AuthContext)
 
+  const location = useLocation();
+
   const ifToken = token !== null && token !== undefined
+
+  useEffect(() => {
+    clearError();
+  }, [location])
 
   useEffect(() => {
     if (loginError) setError(loginError);
     if (budgetError) setError(budgetError);
-  }, [budgetError, loginError, token])
+  }, [budgetError, loginError])
   
-  const clearError = (e) => {
-    e.preventDefault();
+  const clearError = () => {
     setBudgetError(null);
     setLoginError(null);
     setError(null);

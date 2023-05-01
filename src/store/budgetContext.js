@@ -1,5 +1,7 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import api from "./api";
+import axios from "axios";
+import AuthContext from "./loginContext";
 
 const BudgetContext = createContext({
     income: 0,
@@ -15,6 +17,8 @@ export const BudgetContextProvider = (props) => {
     const [mode, setMode] = useState('add');
     const [error, setError] = useState(null);
     
+    const {userId} = useContext(AuthContext);
+
     useEffect(()=> {
         const getData = api.getBudgets();
         if (getData.budgets) {
@@ -33,9 +37,9 @@ export const BudgetContextProvider = (props) => {
         transactions,
         mode,
         error,
+        setIncome,
         adjustIncome: (number) => {
-            setIncome(number);
-            api.postBudgets(budgets, transactions, number);
+            axios.put('https://localhost:4005/income', {income, })
         },
         editBudgets: (change) => {
             let {type, target, payload} = change;
