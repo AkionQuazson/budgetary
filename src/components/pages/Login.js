@@ -29,7 +29,9 @@ const Login = (props) => {
         axios.post(`http://localhost:4005/${mode}`, dataToSend)
             .then(({data}) => {
                 loginCtx.login(data);
-                navigate('/');
+                setTimeout(() => {
+                    navigate('/');
+                }, 1000)
             })
             .catch((err) => {
                 setPassword('');

@@ -27,7 +27,6 @@ function App() {
     if (location.pathname === '/' && userId) {
       axios.post(`http://localhost:4005/income`, {userId})
 	  .then(({data}) => {
-		console.log(data);
 		adjustIncome(data);
       }).catch((err) => {
 		setError(err);

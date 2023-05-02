@@ -19,17 +19,6 @@ export const BudgetContextProvider = (props) => {
     
     const {userId} = useContext(AuthContext);
 
-    useEffect(()=> {
-        const getData = api.getBudgets();
-        if (getData.budgets) {
-            setBudgets(getData.budgets);
-        }
-        if (getData.transactions) {
-            setTransactions(getData.transactions);
-        }
-        setIncome(getData.income);
-    }, []);
-    
     const contextValue = {
         income,
         budgets,
@@ -39,36 +28,11 @@ export const BudgetContextProvider = (props) => {
         error,
         setIncome,
         adjustIncome: (income) => {
-    console.log({userId})
             setIncome(income);
             axios.put(`http://localhost:4005/income`, {income, userId})
         },
-        editBudgets: (change) => {
-            let {type, target, payload} = change;
-            
-            let modBudgets = [...budgets];
-            target = modBudgets.findIndex((bud) => {return bud.name === target});
-            switch(type) {
-                case 'add': 
-                    modBudgets.push(payload)
-                    setBudgets(modBudgets);
-                    api.postBudgets(modBudgets, transactions, income);
-                    break;
-                case 'remove':
-                    modBudgets.splice(target, 1);
-                    //find all related transactions, and delete. Refactor into backend?
-                    setBudgets(modBudgets);
-                    api.postBudgets(modBudgets, transactions, income);
-                    break;
-                case 'change':
-                    modBudgets.splice(target, 1, payload);
-                    setBudgets(modBudgets);
-                    //If a subbudget is deleted, find related transactions and remove the subbudget
-                    api.postBudgets(modBudgets, transactions, income);
-                    break;
-                default:
-                    console.log('undefined action');
-            }
+        editBudgets: (budgets) => {
+            setBudgets(budgets);
             setBudgetTarget('');
         },
         targetBudget: (bud) => {

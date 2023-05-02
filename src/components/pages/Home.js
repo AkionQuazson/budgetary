@@ -1,15 +1,29 @@
 import { useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
+
 import BudgetCard from '../cards/BudgetCard';
 import BudgetContext from '../../store/budgetContext';
 import '../../styles/home.css'
+import AuthContext from '../../store/loginContext';
 
 const Home = (props) => {
-    const {income, setIncome, targetBudget, adjustIncome, budgets, transactions} = useContext(BudgetContext);
+    const {income, setIncome, targetBudget, adjustIncome, editBudgets, budgets, transactions, setError} = useContext(BudgetContext);
+    const {userId} = useContext(AuthContext);
 
     useEffect(() => {
         targetBudget('');
     }, [targetBudget])
+
+    useEffect(() => {
+        axios.get(`http://localhost:4005/budgets/${userId}`)
+        .then(({data}) => {
+            editBudgets(data);
+        })
+        .catch((err) => {
+            setError(err);
+        })
+    }, []);
 
     const totalSpent = transactions.reduce((t, v = 0) => {
         return t + v.value}, 0);
@@ -18,10 +32,10 @@ const Home = (props) => {
         totalBudgeted += +bud.maxValue;
         const budSpent = transactions.filter((t) => t.budget === bud.name).reduce((t, v) => t + v.value, 0);
         return <BudgetCard
-            title={bud.name}
+            title={bud.budget_name}
             key={i}
-            currentAmount={budSpent}
-            maxAmount={bud.maxValue}
+            currentAmount={bud.current_amount}
+            maxAmount={bud.monthly_amount}
             color={bud.color}
          />
     })

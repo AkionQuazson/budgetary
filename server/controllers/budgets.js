@@ -1,9 +1,10 @@
 const {User} = require('../models/user');
 const {Budget} = require('../models/budget');
-const {Subbudget} = require('../models/sub_budget');
+const {SubBudget} = require('../models/sub_budget');
 const {Transaction} = require('../models/transaction');
 
 const getIncome = async (req, res) => {
+    console.log('getIncome');
     const {userId: id} = req.body;
     try {
         let foundUser = await User.findOne({where: {id}});
@@ -13,11 +14,13 @@ const getIncome = async (req, res) => {
         res.status(200).send(JSON.stringify(foundUser.income));
     }
     catch (error) {
+        console.log(error);
         res.sendStatus(400);
     }
 }
 
 const setIncome = async (req, res) => {
+    console.log('setIncome');
     const {income, userId: id} = req.body;
     try{
         let foundUser = await User.findOne({where: {id}});
@@ -41,57 +44,68 @@ const setIncome = async (req, res) => {
         res.status(200).send(JSON.stringify(income));
     }
     catch (error) {
+        console.log(error);
         res.sendStatus(400);
     }
 };
 
 const getBudgets = async (req, res) => {
-    const {userId} = req.body;
+    console.log('getBudgets');
+    const {userId} = req.params;
     try {
         let budgetList = await Budget.findAll({where: {userId}});
         res.status(200).send(JSON.stringify(budgetList));
     }
-    catch {
+    catch (error) {
+        console.log(error);
         res.status(400).send('SQL Error');
     }
 };
 
 const getSubbudgets = async (req, res) => {
-    const {budgetId} = req.body;
+    console.log('getSubBudgets');
+    const {budgetId} = req.params;
     try {
-        let subBudgetList = await Subbudget.findAll({where: {budgetId}});
+console.log({budgetId})
+        let subBudgetList = await SubBudget.findAll({where: {budgetId}});
         res.status(200).send(JSON.stringify(subBudgetList));
     }
     catch (error) {
+        console.log(error);
         res.status(400).send('SQL Error');
     }
 };
 
 const addBudget = async (req, res) => {
-    const {userId, name, amount, color, subBudgets} = req.body;
+    console.log('addBudget');
+    let {userId, name, amount, color, subBudgets} = req.body;
     try {
-        let foundBudget = await Budget.findOne({where: {name, userId}});
+        let foundBudget = await Budget.findOne({where: {budget_name: name, userId}});
         if (foundBudget) {
             res.status(400).send('Budget already exists.');
         }
-        const newBudget = await Budget.create({name, current_amount: amount, monthly_amount: amount, userId, color})
-        subBudgets.forEach(async (sub) => {
-            await Subbudget.create({name: sub.name, amount_used: 0, budgetId: newBudget.id});
+        const newBudget = await Budget.create({budget_name: name, current_amount: amount, monthly_amount: amount, userId, color})
+
+        subBudgets = subBudgets.map((name) => {
+            return {name, amount_used: 0, budgetId: newBudget.id}
         })
+        await SubBudget.bulkCreate(subBudgets);
         res.sendStatus(200);
     }
     catch (error) {
+        console.log(error);
         res.sendStatus(400);
     }
 };
 
 const editBudget = async (req, res) => {
-    const {budgetTarget, name, amount, color, subBudgets, userId} = req.body;
+    console.log('editBudget');
+    let {budgetTarget, name, amount, color, subBudgets, userId} = req.body;
     try {
-        const targetBud = await Budget.findOne({where: {name: budgetTarget, userId}});
+        const targetBud = await Budget.findOne({where: {budget_name: budgetTarget, userId}});
         const differenceInAmount = amount - targetBud.current_amount;
-        await targetBud.update({name, color, monthly_amount: (targetBud.monthly_amount + differenceInAmount)})
-        const subBudgetsList = await Subbudget.findAll({where: {budgetId: id}});
+        await targetBud.update({budget_name: name, color, monthly_amount: (targetBud.monthly_amount + differenceInAmount)})
+        const subBudgetsList = await SubBudget.findAll({where: {budgetId: id}});
         subBudgets = subBudgets.map((bud) => {
             return bud.name
         })
@@ -104,25 +118,29 @@ const editBudget = async (req, res) => {
                 await bud.destroy();
             }
         });
-        subBudgets.forEach(async (name) => {
-            await Subbudget.create({name, amount_used: 0, budgetId: id});
+        subBudgets = subBudgets.map((name) => {
+            return {name, amount_used: 0, budgetId: id}
         })
+        await SubBudget.bulkCreate(subBudgets);
         res.sendStatus(200);
     }
     catch (error) {
+        console.log(error);
         res.sendStatus(400);
     }
 };
 
 const deleteBudget = async (req, res) => {
+    console.log('deleteBudget');
     const {budgetTarget, userId} = req.body;
     try {
-        const {id} = await Budget.findOne({where: {name: budgetTarget, userId}});
+        const {id} = await Budget.findOne({where: {budget_name: budgetTarget, userId}});
         await Transaction.destroy({where: {budgetId: id}})
-        await Subbudget.destroy({where: {budgetId: id}});
+        await SubBudget.destroy({where: {budgetId: id}});
         await Budget.destroy({where: {id, userId}});
     }
     catch (error) {
+        console.log(error);
         res.sendStatus(400);
     }
 };

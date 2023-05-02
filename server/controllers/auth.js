@@ -11,9 +11,9 @@ const createToken = (username, id) => {
 
 const checkMonth = (user) => {
     const {createdAt, updatedAt} = user;
-    let userCreated = JSON.stringify(foundUser.createdAt);
+    let userCreated = JSON.stringify(createdAt);
     userCreated = userCreated.slice(1, 8);
-    let userUpdated = JSON.stringify(foundUser.updatedAt);
+    let userUpdated = JSON.stringify(updatedAt);
     userUpdated = userUpdated.slice(1, 8);
     return (userCreated !== userUpdated);
 }

@@ -32,8 +32,8 @@ app.post('/login', login);
 app.put('/income', setIncome);
 app.post('/income', getIncome);
 
-app.get('/budgets', getBudgets);
-app.get('/subbudgets', getSubbudgets);
+app.get('/budgets/:userId', getBudgets);
+app.get('/subbudgets/:budgetId', getSubbudgets);
 app.post('/budgets', addBudget);
 app.put('/budgets', editBudget);
 app.delete('/budgets', deleteBudget);

@@ -37,7 +37,7 @@ const EditBudgetForm = (props) => {
             return;
         }
         let tempSubs = [...subBudgets];
-        tempSubs.push({name:subText, amountSpent:0});
+        tempSubs.push(subText);
         setSubBudgets(tempSubs);
         setSubText('');
     }
@@ -55,13 +55,13 @@ const EditBudgetForm = (props) => {
             color,
             subBudgets
         }
-        const change = {
-            type: 'add',
-            payload: newBudget,
-            target: null
-        }
-        editBudgets(change)
-        navigate('/');
+        axios.post(`http://localhost:4005/budgets`, {...newBudget, userId})
+        .then(() => {
+            navigate('/');
+        })
+        .catch((err) => {
+            setError(err);
+        })
     }
 
     const editBudget = (e) => {
@@ -72,8 +72,13 @@ const EditBudgetForm = (props) => {
             color,
             subBudgets
         }
-        axios.put(`http://localhost:4005/budgets`, {...update, budgetTarget})
-        navigate('/');
+        axios.put(`http://localhost:4005/budgets`, {...update, budgetTarget, userId})
+        .then(() => {
+            navigate('/');
+        })
+        .catch((err) => {
+            setError(err);
+        })
     }
 
     const deleteBudget = (e) => {
@@ -96,7 +101,7 @@ const EditBudgetForm = (props) => {
     }
 
     const displaySub = subBudgets.map((sub, i) => {
-        return <li id={'subBudget' + i} key={i}>{sub.name + '  '}<button className="deleteButton" onClick={(e) => {deleteSubBudget(e)}}>X</button></li>
+        return <li id={'subBudget' + i} key={i}>{sub + '  '}<button className="deleteButton" onClick={(e) => {deleteSubBudget(e)}}>X</button></li>
     })
 
 
