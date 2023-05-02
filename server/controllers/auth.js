@@ -28,7 +28,7 @@ const login = async (req, res) => {
             if (isAuthenticated) {
                 if (checkMonth(foundUser)) {
                     //add income to currentAmount
-                    //ubdate budgets
+                    //update budgets
                 }
 
                 const token = createToken(foundUser.dataValues.username, foundUser.dataValues.id);

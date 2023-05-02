@@ -12,7 +12,7 @@ const {SubBudget} = require('./models/sub_budget')
 const {Transaction} = require('./models/transaction');
 
 const { login, register } = require('./controllers/auth');
-const {getIncome, setIncome, getBudgets, addBudget, editBudget, deleteBudget} = require('./controllers/budgets')
+const {getIncome, setIncome, getBudgets, getSubbudgets, addBudget, editBudget, deleteBudget} = require('./controllers/budgets')
 const {getTransactions, addTransaction, editTransaction, deleteTransaction} = require('./controllers/transactions')
 
 const app = express();
@@ -33,14 +33,15 @@ app.put('/income', setIncome);
 app.post('/income', getIncome);
 
 app.get('/budgets', getBudgets);
+app.get('/subbudgets', getSubbudgets);
 app.post('/budgets', addBudget);
-app.put('/budgets/:id', editBudget);
-app.delete('/budgets/:id', deleteBudget);
+app.put('/budgets', editBudget);
+app.delete('/budgets', deleteBudget);
 
 app.get('/transactions', getTransactions);
 app.post('/transactions', addTransaction);
-app.put('/transactions/:id', editTransaction);
-app.delete('/transactions/:id', deleteTransaction);
+app.put('/transactions', editTransaction);
+app.delete('/transactions', deleteTransaction);
 
 sequelize.sync()
 .then(() => {

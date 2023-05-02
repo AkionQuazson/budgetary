@@ -2,9 +2,12 @@ import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import BudgetContext from "../../store/budgetContext";
 import '../../styles/budgetForm.css'
+import axios from "axios";
+import AuthContext from "../../store/loginContext";
 
 const EditBudgetForm = (props) => {
-    const {mode, editMode, editBudgets, budgets, budgetTarget} = useContext(BudgetContext);
+    const {mode, editMode, editBudgets, budgets, budgetTarget, setError} = useContext(BudgetContext);
+    const {userId} = useContext(AuthContext)
     const currentBudget = budgets.find((bud) => {return bud.name === budgetTarget});
     const navigate = useNavigate();
 
@@ -47,7 +50,7 @@ const EditBudgetForm = (props) => {
         }
         const newBudget = {
             name: budgetName,
-            maxValue: +maxValue,
+            amount: +maxValue,
             currentSpent: 0,
             color,
             subBudgets
@@ -65,23 +68,23 @@ const EditBudgetForm = (props) => {
         e.preventDefault();
         const update = {
             name: budgetName,
-            maxValue: +maxValue,
-            currentSpent: 0,
+            amount: +maxValue,
             color,
             subBudgets
         }
-        const change = {
-            type: 'change',
-            target: budgetTarget,
-            payload: update
-        }
-        editBudgets(change);
+        axios.put(`http://localhost:4005/budgets`, {...update, budgetTarget})
         navigate('/');
     }
 
     const deleteBudget = (e) => {
         e.preventDefault();
-
+        axios.delete(`http://localhost:4005/budgets`, {budgetTarget, userId})
+        .then (() => {
+            navigate('/');
+        })
+        .catch((err) => {
+            setError(err);
+        })
     }
 
     const deleteSubBudget = (e) => {
