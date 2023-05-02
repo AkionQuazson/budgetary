@@ -16,6 +16,7 @@ const BudgetPage = () => {
     const [transaction, setTransaction] = useState({active:false, budget:null, subBudget:null});
     const [budgetData, setBudgetData] = useState({budget_name:'', color:'#ffffff'});
     const [subBudgets, setSubBudgets] = useState([{name:'', amountSpent:0}]);
+    const [transactionList, setTransactionList] = useState([{budget:'', subBudget:'', value:0, description:''}]);
 
     let {budget} = params;
     const {userId} = useContext(AuthContext);
@@ -29,9 +30,18 @@ const BudgetPage = () => {
             })
             axios.get(`http://localhost:4005/subbudgets/${target.id}`)
             .then(({data}) => {
-                setBudgetData(target);
-                setSubBudgets(data);
-            })
+                const subBuds = data;
+                axios.get(`http://localhost:4005/transactions/${target.id}`)
+                .then(({data}) => {
+                    setBudgetData(target);
+                    setSubBudgets(subBuds);
+console.log(data)
+                    setTransactionList(data);
+                })
+                .catch((err) => {
+                    setError(err);
+                })
+                })
             .catch((err) => {
                 setError(err);
             })
@@ -39,19 +49,32 @@ const BudgetPage = () => {
         .catch((err) => {
             setError(err);
         })
-    }, [])
+    }, [transaction])
 
     const editThisBudget = (e) => {
         targetBudget(budget);
         navigate('/edit');
     }
-console.log({budgetData, subBudgets})
+
+    const displayTransactions = transactionList.map((tran, i) => {
+        console.log(tran)
+        return <TransactionDisplay 
+            key={i}
+            id={tran.id}
+            subBudget={subBudgets.find((sub) => sub.id===tran.subBudgetId)}
+            amount={tran.amount}
+            description={tran.description}
+        />
+    })
+
+
     const displaySubBudgets = subBudgets.map((sub, i) => {
         return <SubBudgetCard
             key={i}
             title={sub.name}
-            budget={budget}
-            currentAmount={sub.amountSpent}
+            subBudget={sub}
+            budget={budgetData}
+            currentAmount={sub.amount_used}
             color={budgetData.color}
             changeTransaction={setTransaction}
         />
@@ -60,12 +83,12 @@ console.log({budgetData, subBudgets})
     return <>
     <div>
         <h2>{budgetData.budget_name}</h2>
-        {/* <h3>{totalSpent}/{maxValue}</h3> */}
+        <h3>{budgetData.current_amount}/{budgetData.monthly_amount}</h3>
         <div className='flexHorizontal'>
             {displaySubBudgets}
         </div>
         <div>
-            {/* {displayTransactions} */}
+            {displayTransactions}
         </div>
     </div>
     {transaction.active && <CreateTransactionForm color={budgetData.color} budget={transaction.budget} subBudget={transaction.subBudget} closeForm={setTransaction} />}

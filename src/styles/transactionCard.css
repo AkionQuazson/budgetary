@@ -1,0 +1,21 @@
+.tranCard {
+    border: 1px solid black;
+    width: 30vw;
+    border-radius: 15px;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    background-color: #dedede;
+}
+
+.tranCard p, .tranCard h3 {
+    margin: 3px auto;
+}
+
+.value::before {
+    content: "$";
+}

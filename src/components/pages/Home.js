@@ -54,10 +54,10 @@ const Home = (props) => {
                     onChange={(e) => {setIncome(e.target.value)}}
                     onBlur={(e) => {adjustIncome(e.target.value)}} />
             </div>
-            <h3>Amount Budgeted</h3>
+            {/* <h3>Amount Budgeted</h3>
             <p className={(totalBudgeted > income) ? 'above-max' : ''}>{totalBudgeted}/{income}</p>
             <h3>Budgeted Amount Spent</h3>
-            <p className={(totalSpent > totalBudgeted || totalSpent > income) ? 'above-max' : ''}>{totalSpent}/{totalBudgeted}</p>
+            <p className={(totalSpent > totalBudgeted || totalSpent > income) ? 'above-max' : ''}>{totalSpent}/{totalBudgeted}</p> */}
         </div>
         <div className='budget-list'>
             {budgetList}

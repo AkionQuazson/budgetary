@@ -1,22 +1,26 @@
 import { useContext, useState } from 'react'
 import BudgetContext from '../store/budgetContext'
 import '../styles/transactionForm.css'
+import axios from 'axios';
 
 const CreateTransactionForm = (props) => {
     const {budget, color, subBudget, closeForm} = props;
-    const {addTransaction} = useContext(BudgetContext);
-    const [value, setValue] = useState(15);
+    const [amount, setAmount] = useState(15);
     const [description, setDescription] = useState('');
 
     const submitForm = (e) => {
         e.preventDefault();
+        const today = new Date();
+        const year = today.getUTCFullYear();
+        const month = today.getUTCMonth() + 1;
         const payload = {
-            budget,
-            subBudget,
-            value,
-            description
+            budgetId: budget.id,
+            subBudgetId: subBudget.id,
+            amount,
+            description,
+            month_applicable: `${year}-${month < 10 ? '0' : ''}${month}`
         };
-        addTransaction(payload);
+        axios.post(`http://localhost:4005/transactions`, {...payload})
         closeForm({budget, subBudget, active:false})
     }
 
@@ -29,7 +33,7 @@ const CreateTransactionForm = (props) => {
             <h3>Add Transaction</h3>
             <div className='currency'>
                 <span>$</span>
-                <input type='number' min='0.00' step='.01' value={value} onChange={(e) => {setValue(+e.target.value)}} />
+                <input type='number' min='0.00' step='1' value={amount} onChange={(e) => {setAmount(+e.target.value)}} />
             </div>
             <textarea name="descriptionArea" id="descriptionArea" placeholder='Description' rows={3} value={description} onChange={(e) => {setDescription(e.target.value)}} ></textarea>
             <input type="submit" />

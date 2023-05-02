@@ -38,10 +38,10 @@ app.post('/budgets', addBudget);
 app.put('/budgets', editBudget);
 app.delete('/budgets', deleteBudget);
 
-app.get('/transactions', getTransactions);
+app.get('/transactions/:budgetId', getTransactions);
 app.post('/transactions', addTransaction);
-app.put('/transactions', editTransaction);
-app.delete('/transactions', deleteTransaction);
+app.put('/transactions/:id', editTransaction);
+app.delete('/transactions/:id', deleteTransaction);
 
 sequelize.sync()
 .then(() => {

@@ -14,6 +14,6 @@ module.exports = {
         username: DataTypes.STRING,
         hashedPass: DataTypes.STRING,
         income: DataTypes.FLOAT,
-        currentAmount: DataTypes.STRING
+        currentAmount: DataTypes.FLOAT
     })
 }

@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import '../../styles/budgetCard.css';
 
 const SubBudgetCard = (props) => {
-    const {title, currentAmount, budget, changeTransaction, color} = props
+    const {title, subBudget, currentAmount, budget, changeTransaction, color} = props
     
     const tooDark = (col) => {
         const r = parseInt(col.charAt(1) + col.charAt(2), 16);
@@ -14,7 +14,7 @@ const SubBudgetCard = (props) => {
 
     const addTrans = (e) => {
         e.preventDefault();
-        changeTransaction({active:true, budget:budget, subBudget:title})
+        changeTransaction({active:true, budget:budget, subBudget:subBudget})
     }
 
     return <div 
