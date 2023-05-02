@@ -38,8 +38,10 @@ export const BudgetContextProvider = (props) => {
         mode,
         error,
         setIncome,
-        adjustIncome: (number) => {
-            axios.put('https://localhost:4005/income', {income, })
+        adjustIncome: (income) => {
+    console.log({userId})
+            setIncome(income);
+            axios.put(`http://localhost:4005/income`, {income, userId})
         },
         editBudgets: (change) => {
             let {type, target, payload} = change;

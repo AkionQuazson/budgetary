@@ -9,6 +9,15 @@ const createToken = (username, id) => {
     return jwt.sign({username, id}, SECRET, {expiresIn: '2 days'})
 }
 
+const checkMonth = (user) => {
+    const {createdAt, updatedAt} = user;
+    let userCreated = JSON.stringify(foundUser.createdAt);
+    userCreated = userCreated.slice(1, 8);
+    let userUpdated = JSON.stringify(foundUser.updatedAt);
+    userUpdated = userUpdated.slice(1, 8);
+    return (userCreated !== userUpdated);
+}
+
 const login = async (req, res) => {
     console.log('login');
     try {
@@ -17,6 +26,11 @@ const login = async (req, res) => {
         if (foundUser) {
             const isAuthenticated = bcrypt.compareSync(password, foundUser.hashedPass);
             if (isAuthenticated) {
+                if (checkMonth(foundUser)) {
+                    //add income to currentAmount
+                    //ubdate budgets
+                }
+
                 const token = createToken(foundUser.dataValues.username, foundUser.dataValues.id);
                 const exp = Date.now() + 1000 * 60 * 60 * 48;
                 res.status(200).send({
@@ -44,6 +58,9 @@ const register = async (req, res) => {
     console.log('registering');
     try {
         const {username, password} = req.body;
+        if (username.length < 3 || password.length < 8) {
+            res.status(400).send('Username or Password too short.')
+        }
         let foundUser = await User.findOne({where: {username}});
         if (foundUser) {
             res.status(400).send('Cannot create user')

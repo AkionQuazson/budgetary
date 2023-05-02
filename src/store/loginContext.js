@@ -43,15 +43,16 @@ export const AuthContextProvider = (props) => {
   const localData = getLocalData()
 
   let initialToken = null;
+  let initialId = null;
   if (localData) {
-    initialToken = localData.token
+    initialToken = localData.token;
   }
 
-  const [token, setToken] = useState(initialToken)
-  const [userId, setUserId] = useState(null)
-  const [error, setError] = useState(null)
+  
 
-  const {adjustIncome} = useContext(BudgetContext);
+  const [token, setToken] = useState(initialToken)
+  const [userId, setUserId] = useState(initialId)
+  const [error, setError] = useState(null)
 
   const logout = () => {
     setToken(null);
@@ -68,10 +69,11 @@ export const AuthContextProvider = (props) => {
     setUserId(userId);
     localStorage.setItem('token', token)
     localStorage.setItem('exp', exp)
-    adjustIncome(income)
 
     const remainingTime = calculateRemainingTime(exp);
     logoutTimer = setTimeout(logout, remainingTime);
+
+    return income;
   }
 
   const contextValue = {

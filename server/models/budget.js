@@ -14,6 +14,6 @@ module.exports = {
         budget_name: DataTypes.STRING,
         current_amount: DataTypes.FLOAT,
         monthly_amount: DataTypes.FLOAT,
-        month_applicable: DataTypes.INTEGER
+        color: DataTypes.STRING //format #hexhex
     })
 }

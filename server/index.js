@@ -12,7 +12,7 @@ const {SubBudget} = require('./models/sub_budget')
 const {Transaction} = require('./models/transaction');
 
 const { login, register } = require('./controllers/auth');
-const {setIncome, getBudgets, addBudget, editBudget, deleteBudget} = require('./controllers/budgets')
+const {getIncome, setIncome, getBudgets, addBudget, editBudget, deleteBudget} = require('./controllers/budgets')
 const {getTransactions, addTransaction, editTransaction, deleteTransaction} = require('./controllers/transactions')
 
 const app = express();
@@ -29,7 +29,8 @@ SubBudget.hasMany(Transaction);
 
 app.post('/register', register);
 app.post('/login', login);
-app.post('/income', setIncome);
+app.put('/income', setIncome);
+app.post('/income', getIncome);
 
 app.get('/budgets', getBudgets);
 app.post('/budgets', addBudget);

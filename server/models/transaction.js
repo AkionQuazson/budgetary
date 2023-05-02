@@ -13,6 +13,6 @@ module.exports = {
         },
         description: DataTypes.STRING,
         amount: DataTypes.FLOAT,
-        month_applicable: DataTypes.INTEGER
+        month_applicable: DataTypes.STRING //format YYYY-MM
     })
 }

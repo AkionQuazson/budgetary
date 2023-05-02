@@ -13,6 +13,7 @@ module.exports = {
         },
         username: DataTypes.STRING,
         hashedPass: DataTypes.STRING,
-        income: DataTypes.FLOAT
+        income: DataTypes.FLOAT,
+        currentAmount: DataTypes.STRING
     })
 }
