@@ -17,6 +17,7 @@ const BudgetPage = () => {
     const [budgetData, setBudgetData] = useState({budget_name:'', color:'#ffffff'});
     const [subBudgets, setSubBudgets] = useState([{name:'', amountSpent:0}]);
     const [transactionList, setTransactionList] = useState([{budget:'', subBudget:'', value:0, description:''}]);
+    const [update, setUpdate] = useState(false);
 
     let {budget} = params;
     const {userId} = useContext(AuthContext);
@@ -49,10 +50,11 @@ console.log(data)
         .catch((err) => {
             setError(err);
         })
-    }, [transaction])
+    }, [update])
 
     const editThisBudget = (e) => {
         targetBudget(budget);
+        setUpdate(!update);
         navigate('/edit');
     }
 
@@ -64,6 +66,7 @@ console.log(data)
             subBudget={subBudgets.find((sub) => sub.id===tran.subBudgetId)}
             amount={tran.amount}
             description={tran.description}
+            runUpdate={() => {setUpdate(!update)}}
         />
     })
 
@@ -76,7 +79,10 @@ console.log(data)
             budget={budgetData}
             currentAmount={sub.amount_used}
             color={budgetData.color}
-            changeTransaction={setTransaction}
+            changeTransaction={(transactionData) => {
+                setTransaction(transactionData);
+                setUpdate(!update);
+            }}
         />
     })
 
@@ -91,7 +97,10 @@ console.log(data)
             {displayTransactions}
         </div>
     </div>
-    {transaction.active && <CreateTransactionForm color={budgetData.color} budget={transaction.budget} subBudget={transaction.subBudget} closeForm={setTransaction} />}
+    {transaction.active && <CreateTransactionForm color={budgetData.color} budget={transaction.budget} subBudget={transaction.subBudget} closeForm={(transactionData) => {
+                setTransaction(transactionData)
+                setUpdate(!update);
+            }} />}
     {/* <button className="cornerButton" onClick={(e) => editThisBudget(e)} >Edit</button> */}
 </>
 

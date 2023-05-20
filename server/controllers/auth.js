@@ -63,12 +63,12 @@ const register = async (req, res) => {
         }
         let foundUser = await User.findOne({where: {username}});
         if (foundUser) {
-            res.status(400).send('Cannot create user')
+            res.status(400).send('Cannot create user');
         }
         else {
             const salt = bcrypt.genSaltSync(10);
             const hashedPass = bcrypt.hashSync(password, salt);
-            const newUser = await User.create({username, hashedPass, income:0})
+            const newUser = await User.create({username, hashedPass, income:0});
             const token = createToken(newUser.dataValues.username, newUser.dataValues.id);
             const exp = Date.now() + 1000 * 60 * 60 * 48;
             res.status(200).send({

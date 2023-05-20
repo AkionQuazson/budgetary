@@ -25,11 +25,11 @@ const Home = (props) => {
         })
     }, []);
 
-    const totalSpent = transactions.reduce((t, v = 0) => {
-        return t + v.value}, 0);
+    let totalSpent = 0;
     let totalBudgeted = 0;
     const budgetList = budgets.map((bud, i) => {
-        totalBudgeted += +bud.maxValue;
+        totalBudgeted += +bud.monthly_amount;
+        totalSpent += (+bud.monthly_amount - +bud.current_amount);
         const budSpent = transactions.filter((t) => t.budget === bud.name).reduce((t, v) => t + v.value, 0);
         return <BudgetCard
             title={bud.budget_name}
@@ -54,10 +54,10 @@ const Home = (props) => {
                     onChange={(e) => {setIncome(e.target.value)}}
                     onBlur={(e) => {adjustIncome(e.target.value)}} />
             </div>
-            {/* <h3>Amount Budgeted</h3>
+            <h3>Amount Budgeted</h3>
             <p className={(totalBudgeted > income) ? 'above-max' : ''}>{totalBudgeted}/{income}</p>
             <h3>Budgeted Amount Spent</h3>
-            <p className={(totalSpent > totalBudgeted || totalSpent > income) ? 'above-max' : ''}>{totalSpent}/{totalBudgeted}</p> */}
+            <p className={(totalSpent > totalBudgeted || totalSpent > income) ? 'above-max' : ''}>{totalSpent}/{totalBudgeted}</p>
         </div>
         <div className='budget-list'>
             {budgetList}

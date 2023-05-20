@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import BudgetContext from '../../store/budgetContext';
 
 const TransactionDisplay = (props) => {
-    const {id, subBudget, amount, description} = props
+    const {id, runUpdate, subBudget, amount, description} = props
     const {setError} = useContext(BudgetContext);
     
     const deleteTransaction = (e) => {
@@ -17,7 +17,10 @@ const TransactionDisplay = (props) => {
         <h3>{subBudget.name}</h3>
         <p className='value'>{amount}</p>
         <p>{description}</p>
-        <button onClick={(e) => deleteTransaction(e)}>X</button>
+        <button onClick={(e) => {
+            deleteTransaction(e);
+            runUpdate();
+            }}>X</button>
     </div>
 }
 
